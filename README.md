@@ -71,3 +71,22 @@ If we are able to render such information in a working frame, then we will know 
 
 ## Architecture Diagram
 
+Our architecture diagram consists fo 3 parts, making a request from the Yelp API, parsing the JSON data from the request, and rendering the information is a GUI.In order to get the information from Yelp we will first generate a link with the business information in json format. Using the net-url library, we plan to take this information and convert it into usable information using the json library. This will be done by first making the generating the link based on user input, retrieving the information from the url and saving into a variable. We can then use the JSON library functions to format the data into a JSON object which can be searched. Using the hash-ref function we can enter which piece of information we would like to retrieve such as business names, locations and prices. We plan on using accumulate to generate a list containing all the raw business information in JSON format and then mapping that list, creating a new list with just the information we want. Once we have all the information in an easy to manipluate format we plan on making a simple GUI where information such as name, price and location can be shown to the user. We will do this by making a small frame and apply text to the frame with the information we want. Within this frame we can add certain components like buttons and images. SInce the Yelp API provides links to images of businesses, we can once again use the net-url library to retrieve those images and display them in the GUI by adding an image section. Using a button we can have a function be called to change the information in each section of the GUI. We will have the newly generated information come directly from the list we created using accumulate and map previously. THis will allow the user to click the button and generate a new result every time.
+
+In all, the architecture of our project relies on a combination of 3 different libraries, net-url, json and gui. We will be able to retrieve raw information from the web, parse it into a usable format and display it for any user so they can use it easily.
+
+## Schedule
+
+### First Milestone (Sun Apr 9)
+By this time we plan to be able to retrieve data from the Yelp API and generate JSON data that can actually be used. We hope to have figured out how the net-url library retrieves data and how to reference the JSON result.
+
+### Second Milestone (Sun Apr 16)
+By this time we plan to have full control over the JSON data retrieved form the Yelp API as well as develop the alogrithms necessary to convert the raw data into a readable format using accumulate and map. We also plan to have a simple GUI set up so that we can begin to app the JSON data to it and have it show on screen to the user.
+
+## Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28 [your date to be determined later])
+By this time we plan to have a fully working GUI with all the JSON data available to be shown on screen. This includes showing business names, prices and photos. We also plan on adding a feature where the user can randomly generate a business in thier area and continue to generate them for as long as there is new data available. We plan to have this be done via keyboard inoput of location and a button that generates a random business.
+
+## Group Responsibilities
+
+### Brandon Karl @brandonkarl
+For this project I will be responsible for retrieving the text data from the net-url request and creating the JSON object. I will also be implementing the algorithms necessary to better organize the data into a useful way and have it be in a printable format, using accumulate and map. I wil also be helping serey with setting up the basic GUI for this information to be shown on screen. 
