@@ -83,7 +83,7 @@ By this time we plan to be able to retrieve data from the Yelp API and generate 
 ### Second Milestone (Sun Apr 16)
 By this time we plan to have full control over the JSON data retrieved form the Yelp API as well as develop the alogrithms necessary to convert the raw data into a readable format using accumulate and map. We also plan to have a simple GUI set up so that we can begin to app the JSON data to it and have it show on screen to the user.
 
-## Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28 [your date to be determined later])
+## Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28)
 By this time we plan to have a fully working GUI with all the JSON data available to be shown on screen. This includes showing business names, prices and photos. We also plan on adding a feature where the user can randomly generate a business in thier area and continue to generate them for as long as there is new data available. We plan to have this be done via keyboard inoput of location and a button that generates a random business.
 
 ## Group Responsibilities
