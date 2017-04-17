@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/gui
 
 ;-------------------------------------------------
 ;
@@ -56,7 +56,53 @@
 
 
 
+; THE INITIAL GUI
+(define frame (new frame% [label "Yelp App"]
+                          [width 500]
+                          [height 500]
+                          ))
+(define titleFont (make-object font% 20 "Arial" 'default 'italic 'bold))
 
+(define welcomeMsg (new message% [parent frame]
+                          [label "Lets look for something to eat!"]
+                          [auto-resize #t]
+                          [font titleFont]
+                          ))
+
+
+
+(define searchMsg (new message% [parent frame]
+                          [label "What do you want to eat?"]
+                          [auto-resize #t]
+                          ))
+
+(new text-field% [label ""] [parent frame]
+                            [vert-margin 10]
+                            [horiz-margin 100]
+                            )
+;; Callback for request here
+
+(define testMsg (new message% [parent frame]
+                          [label "A fine place to eat will appear once you search!"]
+                          [auto-resize #t]
+                          [font titleFont]
+                          ))
+
+(define priceMsg (new message% [parent frame]
+                          [label "Price: None yet!"]
+                          [auto-resize #t]
+                          ))
+(define phoneMsg (new message% [parent frame]
+                          [label "Phone: None yet!"]
+                          [auto-resize #t]
+                          ))
+
+(define image
+  (read-bitmap "./yelplogo.png"))
+(define image2 (new message% [parent frame] [label image]))
+
+
+(send frame show #t)
 
 
 
