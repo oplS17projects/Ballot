@@ -55,6 +55,18 @@
 ;(define (show-info) (begin (print-text-info) image))
 
 
+;; Make the request to our endpoint
+(define (sendyelp t e)
+  (define (url)
+    (string-append "http://ballotyelp.herokuapp.com/yelpsearch/" (car (string-split (send t get-value))) "/" (cadr (string-split (send t get-value)))))
+  (define (myurl) (string->url (url)))
+  (define (myport) (get-pure-port (myurl)))
+  (define (response) (port->string (myport)))
+  (define (yelp) (with-input-from-string
+    (response)             
+    (λ () (read-json))))
+  (if (equal? (send e get-event-type) 'text-field-enter) 0 ""))
+;; function to write to screen to be implemented
 
 ; THE INITIAL GUI
 (define frame (new frame% [label "Yelp App"]
@@ -79,7 +91,7 @@
 (new text-field% [label ""] [parent frame]
                             [vert-margin 10]
                             [horiz-margin 100]
-                            )
+                            [callback sendyelp])
 ;; Callback for request here
 
 (define testMsg (new message% [parent frame]
