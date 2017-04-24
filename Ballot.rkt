@@ -13,8 +13,8 @@
 (require 2htdp/image)
 
 ; These will eventually be replaced with whatever the user unters into gui
-(define food "sushi")
-(define location "boston")
+;(define food "sushi")
+;(define location "boston")
 
 ;Combines all the info
 (define (combiner lst1 lst2 lst3 lst4)
@@ -23,27 +23,62 @@
       (cons (list (car lst1) (car lst2) (car lst3) (car lst4)) (combiner (cdr lst1) (cdr lst2) (cdr lst3) (cdr lst4))))
   )
 
-;Creates a link to retrieve the info
-(define url (string-append "http://ballotyelp.herokuapp.com/yelpsearch/" food "/" location))
-(define myurl (string->url url))
-(define myport (get-pure-port myurl))
-(define response (port->string myport))
 
-;Uses port and creates a JSON
-(define yelp (with-input-from-string response (λ () (read-json))))
+(define indexstart 0)
 
-;First layer of the JSON is the businesses, uses fold
-(define businessData (foldr cons '() (hash-ref yelp 'businesses)))
+(define (make term number yelp)
+  (define (usedindex) '())
+  (define (businessData) (foldr cons '() (hash-ref yelp 'businesses)))
+  (define (combinations) (combiner (businessNames) (businessPhotos) (businessPrice) (businessPhone)))
+  (define (businessNames) (map (lambda (x) (hash-ref x 'name)) (businessData)))
+  (define (businessPhotos) (map (lambda (x) (hash-ref x 'image_url)) (businessData)))
+  (define (businessPrice) (map (lambda (x) (hash-ref x 'price (lambda () "No price found!"))) (businessData)))
+  (define (businessPhone) (map (lambda (x) (hash-ref x 'display_phone (lambda () "No number found!"))) (businessData)))
+  (define (changedata number)
+    (begin
+      (send testMsg set-label (car (list-ref (combinations) number)))
+      (send priceMsg set-label (string-append "Price: " (caddr (list-ref (combinations) number))))
+      (send phoneMsg set-label (string-append "Phone: " (cadddr (list-ref (combinations) number))))
+      (send image2 set-label (read-bitmap
+                              (get-pure-port
+                               (string->url
+                                (cadr (list-ref (combinations) number))))))
+      )
+    )
+  
 
-;Gets all the information from the JSON, uses map
-(define businessNames (map (lambda (x) (hash-ref x 'name)) businessData))
-(define businessPhotos (map (lambda (x) (hash-ref x 'image_url)) businessData))
-(define businessPrice (map (lambda (x) (hash-ref x 'price (lambda () "No price found!"))) businessData))
-(define businessPhone (map (lambda (x) (hash-ref x 'display_phone (lambda () "No number found!"))) businessData))
-
-;Combines all the data into a usable list, where each element is a different resteraunt
-(define combinations (combiner businessNames businessPhotos businessPrice businessPhone))
-
+    
+    
+  ;(begin (send testMsg set-label (car (list-ref (combinations) number)))
+  ;(send image2 set-label (read-bitmap
+         ;(get-pure-port
+          ;(string->url
+           ;(cdr (list-ref (combinations) number))))))
+  ;(set! numentered (+ numentered 1)))
+  (begin (changedata number)
+         (if (= indexstart 0)
+             (begin (new button% [parent frame]
+             [label "Another one"]
+             ; Callback procedure for a button click:
+             [callback (lambda (x y) (if (< indexstart (length (combinations)))
+                                                 (begin (changedata indexstart)
+                                                 (set! indexstart (+ indexstart 1)))
+                                                 (begin (set! indexstart 0)
+                                                        (changedata indexstart)))
+                         )]))
+             (begin
+               (send frame delete-child (list-ref (send frame get-children) 7))
+               (new button% [parent frame]
+             [label "Another one"]
+             ; Callback procedure for a button click:
+             [callback (lambda (x y) (if (< indexstart (length (combinations)))
+                                                 (begin (changedata indexstart)
+                                                 (set! indexstart (+ indexstart 1)))
+                                                 (begin (set! indexstart 0)
+                                                        (changedata indexstart)))
+                         )])))
+         )
+  )
 
 
 ;Net/url lib rary does not support retrieving images and printing them, but 2htdp does.
@@ -65,7 +100,7 @@
   (define (yelp) (with-input-from-string
     (response)             
     (λ () (read-json))))
-  (if (equal? (send e get-event-type) 'text-field-enter) 0 ""))
+  (if (equal? (send e get-event-type) 'text-field-enter) (make (send t get-value) 0 (yelp)) ""))
 ;; function to write to screen to be implemented
 
 ; THE INITIAL GUI
