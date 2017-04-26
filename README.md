@@ -93,5 +93,5 @@ For this project I was able to retriev the text data from the `(net-url)` reques
 
 ### Serey Morm @smorm
 
-My portion of the work involves using the retrieved information and rendering it to the UI`(racket/gui)`. To render the images, I will be using the `(net/url)` library as well as making a responsive UI (scaling image size, buttons, text boxes, etc.). 
+My portion of the work involved using the retrieved information and rendering it to the UI`(racket/gui)`. To render the images, I used the `(net/url)` library as well as making a responsive UI (scaling image size, buttons, text boxes, etc.). As well as setting up the interface, I also assisted Brandon with the HTTP get requests portion to obtain the JSON objects from our API.
 
