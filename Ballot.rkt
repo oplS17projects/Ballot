@@ -93,7 +93,7 @@
 ;; Make the request to our endpoint
 (define (sendyelp t e)
   (define (url)
-    (string-append "http://ballotyelp.herokuapp.com/yelpsearch/" (car (string-split (send t get-value))) "/" (cadr (string-split (send t get-value)))))
+    (string-append "http://sample-env.5qpmzezbye.us-east-1.elasticbeanstalk.com/yelpsearch/" (car (string-split (send t get-value))) "/" (cadr (string-split (send t get-value)))))
   (define (myurl) (string->url (url)))
   (define (myport) (get-pure-port (myurl)))
   (define (response) (port->string (myport)))
