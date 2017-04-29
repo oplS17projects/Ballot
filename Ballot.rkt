@@ -1,20 +1,8 @@
 #lang racket/gui
-
-;-------------------------------------------------
-;
-; To show the first piece of data, call the (show-info)
-; function. Shows the name, price and image of the result
-; using the food and location variables.
-;
-;-------------------------------------------------
-
 (require net/url)
 (require json)
 (require 2htdp/image)
 
-; These will eventually be replaced with whatever the user unters into gui
-;(define food "sushi")
-;(define location "boston")
 
 ;Combines all the info
 (define (combiner names photos prices phones)
@@ -60,12 +48,6 @@
 
     
     
-  ;(begin (send testMsg set-label (car (list-ref (combinations) number)))
-  ;(send image2 set-label (read-bitmap
-         ;(get-pure-port
-          ;(string->url
-           ;(cdr (list-ref (combinations) number))))))
-  ;(set! numentered (+ numentered 1)))
   (begin (changedata number)
          (if (= indexstart 0)
              (begin (new button% [parent frame]
@@ -90,15 +72,6 @@
                          )])))
          )
   )
-
-
-;Net/url lib rary does not support retrieving images and printing them, but 2htdp does.
-;Basically net-url for images
-;(define image (bitmap/url (hash-ref (car businesses) 'image_url)))
-
-;Prints the info for the first location
-;(define (print-text-info) (printf "We think you should go to ~a, it costs ~a.~n" name price))
-;(define (show-info) (begin (print-text-info) image))
 
 
 ;; Make the request to our endpoint
