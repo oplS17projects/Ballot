@@ -17,11 +17,22 @@
 ;(define location "boston")
 
 ;Combines all the info
-(define (combiner lst1 lst2 lst3 lst4)
-  (if (null? lst1)
+(define (combiner names photos prices phones)
+  (if (null? names)
       '()
-      (cons (list (car lst1) (car lst2) (car lst3) (car lst4)) (combiner (cdr lst1) (cdr lst2) (cdr lst3) (cdr lst4))))
+      (cons (list (car names) (car photos) (car prices) (car phones)) (combiner (cdr names) (cdr photos) (cdr prices) (cdr phones))))
   )
+
+
+(define (getName lst)
+  (car lst))
+(define (getPrice lst)
+  (caddr lst))
+(define (getPhone lst)
+  (cadddr lst))
+(define (getPhoto lst)
+  (cadr lst))
+
 
 
 (define indexstart 0)
@@ -36,13 +47,13 @@
   (define (businessPhone) (map (lambda (x) (hash-ref x 'display_phone (lambda () "No number found!"))) (businessData)))
   (define (changedata number)
     (begin
-      (send testMsg set-label (car (list-ref (combinations) number)))
-      (send priceMsg set-label (string-append "Price: " (caddr (list-ref (combinations) number))))
-      (send phoneMsg set-label (string-append "Phone: " (cadddr (list-ref (combinations) number))))
+      (send testMsg set-label (getName (list-ref (combinations) number)))
+      (send priceMsg set-label (string-append "Price: " (getPrice (list-ref (combinations) number))))
+      (send phoneMsg set-label (string-append "Phone: " (getPhone (list-ref (combinations) number))))
       (send image2 set-label (read-bitmap
                               (get-pure-port
                                (string->url
-                                (cadr (list-ref (combinations) number))))))
+                                (getPhoto (list-ref (combinations) number))))))
       )
     )
   
